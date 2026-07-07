@@ -1,0 +1,2 @@
+tradingview-websocket>=0.6
+websocket-client>=1.9.0

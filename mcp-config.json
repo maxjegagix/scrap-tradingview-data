@@ -1,0 +1,114 @@
+{
+  "name": "tradingview-data-scraper",
+  "version": "1.0.0",
+  "description": "MCP Server for fetching real market data from TradingView",
+  "main": "mcp_server.py",
+  "type": "mcp-server",
+  "language": "python",
+  "python_version": "3.11+",
+  
+  "mcp": {
+    "version": "0.1",
+    "transport": "stdio",
+    "capabilities": {
+      "tools": true,
+      "resources": false,
+      "prompts": false
+    }
+  },
+  
+  "tools": [
+    {
+      "name": "fetch_trading_data",
+      "description": "Fetch trading data for any symbol with custom parameters",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "description": "Trading symbol (XAUUSD, AAPL, EURUSD, BTCUSD, etc.)"
+          },
+          "timeframe": {
+            "type": "string",
+            "description": "Timeframe: 1, 5, 15, 30, 60, 240, D, W, M"
+          },
+          "candles": {
+            "type": "integer",
+            "description": "Number of candles to fetch"
+          }
+        },
+        "required": ["symbol"]
+      }
+    },
+    {
+      "name": "get_last_hour",
+      "description": "Get last 1 hour of trading data (M5 candles)",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "description": "Trading symbol"
+          }
+        },
+        "required": ["symbol"]
+      }
+    },
+    {
+      "name": "get_last_day",
+      "description": "Get last 24 hours of trading data (M1 candles)",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "description": "Trading symbol"
+          }
+        },
+        "required": ["symbol"]
+      }
+    },
+    {
+      "name": "get_last_week",
+      "description": "Get last 7 days of trading data (Daily candles)",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "description": "Trading symbol"
+          }
+        },
+        "required": ["symbol"]
+      }
+    }
+  ],
+  
+  "dependencies": {
+    "tradingview-websocket": ">=0.6"
+  },
+  
+  "installation": {
+    "npm": "Not applicable (Python project)",
+    "pip": "pip install -r requirements.txt",
+    "uv": "uv pip install tradingview-websocket"
+  },
+  
+  "usage": {
+    "stdio": "python mcp_server.py",
+    "example_request": {
+      "tool": "get_last_hour",
+      "params": {
+        "symbol": "XAUUSD"
+      }
+    }
+  },
+  
+  "supported_symbols": {
+    "stocks": ["AAPL", "MSFT", "GOOGL", "TSLA", "NVDA", "META", "AMZN"],
+    "indices": ["SPX", "NDX", "INDU"],
+    "forex": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "EURGBP"],
+    "commodities": ["XAUUSD", "XAGUSD", "USOIL", "NATGAS", "COPPER"],
+    "crypto": ["BTCUSD", "ETHUSD", "LTCUSD", "XRPUSD", "ADAUSD", "DOGEUSD"]
+  }
+}
